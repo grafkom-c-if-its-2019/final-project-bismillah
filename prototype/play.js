@@ -1,5 +1,3 @@
-// import * as THREE from '../node_modules/three'
-
 const TABLE_SIZE = { w: 120, h: 8, d: 60 }
 const TABLE_LEG_POS = { x: 50, y: -15, z: 20 }
 
@@ -91,16 +89,14 @@ function GameWorld(id) {
 
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
     this.camera.position.x = 0
-    this.camera.position.y = 60
-    this.camera.position.z = 130
+    this.camera.position.y = 200
+    this.camera.position.z = 0
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.shadowMap.enabled = true
     this.renderer.setClearColor(0xFFFFFF)
     this.renderer.setSize(window.innerWidth, window.innerHeight)
 
-    this.referee = new THREE.Group()
-    this.skyBox = new THREE.Group()
     this.mejaGroup = new THREE.Group()
     this.players = []
 
@@ -195,119 +191,6 @@ GameWorld.prototype.createSetMeja = function () {
     this.scene.add(this.mejaGroup)
 }
 
-GameWorld.prototype.createReferee = function () {
-    //kepala wasit
-    let headMaterial = [
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_right.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_left.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_top.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_bottom.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_front.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_back.jpg')
-        })
-    ]
-    let refHead = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), headMaterial)
-    refHead.name = 'refHead'
-    refHead.position.set(0, 30, -60)
-    refHead.castShadow = true
-    refHead.lookAt(this.bola.position)
-    this.referee.add(refHead)
-
-    //badan wasit
-    let bodyMaterial = [
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/body_right.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/body_left.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/body_top.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/body_bottom.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/body_front.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/body_back.jpg')
-        })
-    ]
-    let refBody = new THREE.Mesh(new THREE.BoxGeometry(35, 25, 5), bodyMaterial)
-    refBody.name = 'refBody'
-    refBody.position.set(0, 10, -60)
-    refBody.castShadow = true
-    this.referee.add(refBody)
-
-    //kaki wasit
-    let legMaterial = [
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/leg_right.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/leg_left.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/leg_bottom.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/leg_bottom.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/leg_front.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/leg_back.jpg')
-        })
-    ]
-    let refLeg = new THREE.Mesh(new THREE.BoxGeometry(15, 25, 5), legMaterial)
-    refLeg.name = 'refLeg'
-    refLeg.position.set(0, -15, -60)
-    refLeg.castShadow = true
-    this.referee.add(refLeg)
-
-    this.scene.add(this.referee)
-}
-
-GameWorld.prototype.createSkyBox = function () {
-    let skyBoxMaterials = [
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/textures/cubemap1/posx.jpg'), side: THREE.DoubleSide
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/textures/cubemap1/negx.jpg'), side: THREE.DoubleSide
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/textures/cubemap1/posy.jpg'), side: THREE.DoubleSide
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/textures/cubemap1/negy.jpg'), side: THREE.DoubleSide
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/textures/cubemap1/posz.jpg'), side: THREE.DoubleSide
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/textures/cubemap1/negz.jpg'), side: THREE.DoubleSide
-        })
-    ]
-    let skyBoxMaterial = new THREE.Mesh(new THREE.BoxGeometry(300, 300, 300), skyBoxMaterials)
-    skyBoxMaterial.position.set(0, 120, 0)
-    skyBoxMaterial.name = 'skyBoxMaterial'
-    this.skyBox.add(skyBoxMaterial)
-    this.scene.add(this.skyBox)
-}
 
 GameWorld.prototype.createPlayers = function () {
     [1, -1].forEach(id => {
@@ -323,8 +206,6 @@ GameWorld.prototype.createPlayers = function () {
 GameWorld.prototype.initWorld = function () {
     this.createSetMeja()
     this.createLighting()
-    this.createSkyBox()
-    this.createReferee()
     this.createPlayers()
 }
 
@@ -347,10 +228,6 @@ window.onload = function () {
     temp.initWorld()
     temp.render()
     console.log(temp)
-    // let a = new Player(-1)
-    // a.createRaket()
-    // console.log(a.racket == undefined)
-    // console.log(a)
 }
 
 var pressed_key = {
@@ -414,7 +291,8 @@ function handle_racket() {
     }
 }
 
-function handle_env_status() {
+function handle_env_status() 
+{
     if (pressed_key.change_env == true) {
         if (env_status == 3) {
             env_status = 1
@@ -422,81 +300,8 @@ function handle_env_status() {
         else {
             env_status += 1
         }
-        handle_env(env_status)
         pressed_key.change_env = false
     }
-}
-
-function handle_env(status) {
-    let skyBoxMaterials2
-    if (status == 1) {
-        skyBoxMaterials2 = [
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap1/posx.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap1/negx.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap1/posy.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap1/negy.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap1/posz.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap1/negz.jpg'), side: THREE.DoubleSide
-            })
-        ]
-    }
-    else if (status == 2) {
-        skyBoxMaterials2 = [
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap2/posx.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap2/negx.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap2/posy.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap2/negy.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap2/posz.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap2/negz.jpg'), side: THREE.DoubleSide
-            })
-        ]
-    }
-    else {
-        skyBoxMaterials2 = [
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap3/posx.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap3/negx.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap3/posy.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap3/negy.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap3/posz.jpg'), side: THREE.DoubleSide
-            }),
-            new THREE.MeshLambertMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/cubemap3/negz.jpg'), side: THREE.DoubleSide
-            })
-        ]
-    }
-    temp.skyBox.children[0] = new THREE.Mesh(new THREE.BoxGeometry(300, 300, 300), skyBoxMaterials2)
-    temp.skyBox.children[0].position.set(0, 120, 0)
 }
 
 document.addEventListener("keydown", handle_keydown, false);
@@ -555,7 +360,4 @@ function balls() {
             temp.players[0].setScoreMesh(temp.scene)
         }
     }
-
-    //mindah kepala wasit
-    temp.referee.children[0].lookAt(temp.bola.position)
 }
