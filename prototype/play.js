@@ -91,8 +91,8 @@ function GameWorld(id) {
 
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
     this.camera.position.x = 0
-    this.camera.position.y = 60
-    this.camera.position.z = 130
+    this.camera.position.y = 200
+    this.camera.position.z = 0
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.shadowMap.enabled = true
