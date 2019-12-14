@@ -75,7 +75,7 @@ function init() {
     scene.add(dirLight2)
 
     camera.position.x = 0
-    camera.position.y = 60
+    camera.position.y = 80
     camera.position.z = 100
     camera.lookAt(scene.position)
 
