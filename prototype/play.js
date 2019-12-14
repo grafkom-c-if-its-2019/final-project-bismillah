@@ -1,5 +1,3 @@
-// import * as THREE from '../node_modules/three'
-
 const TABLE_SIZE = { w: 120, h: 8, d: 60 }
 const TABLE_LEG_POS = { x: 50, y: -15, z: 20 }
 
