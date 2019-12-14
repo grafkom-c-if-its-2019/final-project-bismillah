@@ -99,7 +99,6 @@ function GameWorld(id) {
     this.renderer.setClearColor(0xFFFFFF)
     this.renderer.setSize(window.innerWidth, window.innerHeight)
 
-    this.referee = new THREE.Group()
     this.mejaGroup = new THREE.Group()
     this.players = []
 
@@ -194,37 +193,6 @@ GameWorld.prototype.createSetMeja = function () {
     this.scene.add(this.mejaGroup)
 }
 
-GameWorld.prototype.createReferee = function () {
-    //kepala wasit
-    let headMaterial = [
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_right.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_left.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_top.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_bottom.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_front.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('assets/head_back.jpg')
-        })
-    ]
-    let refHead = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), headMaterial)
-    refHead.name = 'refHead'
-    refHead.position.set(0, 30, -60)
-    refHead.castShadow = true
-    refHead.lookAt(this.bola.position)
-    this.referee.add(refHead)
-
-    this.scene.add(this.referee)
-}
 
 GameWorld.prototype.createPlayers = function () {
     [1, -1].forEach(id => {
@@ -240,7 +208,6 @@ GameWorld.prototype.createPlayers = function () {
 GameWorld.prototype.initWorld = function () {
     this.createSetMeja()
     this.createLighting()
-    this.createReferee()
     this.createPlayers()
 }
 
@@ -395,7 +362,4 @@ function balls() {
             temp.players[0].setScoreMesh(temp.scene)
         }
     }
-
-    //mindah kepala wasit
-    temp.referee.children[0].lookAt(temp.bola.position)
 }
