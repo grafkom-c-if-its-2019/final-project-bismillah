@@ -59,8 +59,9 @@ function GameWorld(id) {
     this.scene = new THREE.Scene()
    
     this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
-    this.camera.position.set( 400, 200, 0 );
-
+    this.camera.position.set( 85, 100, 65 );
+    //400, 200,0  default view
+    //85, 100,65   dramatic view
     // this.camera.position.x = 0
     // // this.camera.position.y = 200
     // // this.camera.position.z = 0
@@ -98,7 +99,7 @@ function GameWorld(id) {
     this.bolaVelocity = new THREE.Vector3()
     this.restart = true
 
-    this.controls = new OrbitControls( camera, renderer.domElement );
+    this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
 
     //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
 
@@ -237,7 +238,8 @@ GameWorld.prototype.animate = function () {
 
     this.controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
 
-    render();
+    this.renderer.render( this.scene, this.camera );
+    //render();
 }
 
 GameWorld.prototype.render = function () {
