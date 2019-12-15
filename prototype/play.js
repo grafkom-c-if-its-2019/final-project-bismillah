@@ -110,7 +110,7 @@ function GameWorld(id) {
 
     this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0x0000FF }))
     this.bola.castShadow = false
-    this.bola.position.set(0, 6, 0)
+    this.bola.position.set(49, 6, 0)
     this.scene.add(this.bola)
     this.bolaVelocity = new THREE.Vector3()
     this.restart = true
@@ -290,7 +290,15 @@ function handle_keydown(event) {
         pressed_key.player_1_up = true
     }
     else if (key_code == 32) {
-        pressed_key.change_env = true
+        if(temp.isStart == false){
+            temp.isStart = true
+        }
+        else{
+            temp.isStart = false
+        }
+    }
+    else if (key_code == 82){
+        restart()
     }
 }
 
@@ -309,6 +317,7 @@ function handle_keyup(event) {
         pressed_key.player_1_up = false
     }
 }
+
 
 var env_status = 1
 
@@ -347,17 +356,26 @@ document.addEventListener("keyup", handle_keyup, false)
 var bounce = new Audio('assets/sound/Ping_Pong_Ball_Hit.mp3');
 var buzz = new Audio('assets/sound/buzz.mp3');
 
+function restart(){
+    var initial_ball_angle = (((Math.random() - 0.5) * 2) * 360) * (Math.PI / 180)
+    temp.bolaVelocity.x = Math.cos(initial_ball_angle)
+    temp.bolaVelocity.z = Math.sin(initial_ball_angle)
+    temp.bola.position.x = 49
+    temp.bola.position.z = 0
+    temp.restart = false
+    temp.isStart = false
+}
+
+
 function balls() {
     if (temp.restart == true) {
-        var initial_ball_angle = (((Math.random() - 0.5) * 2) * 360) * (Math.PI / 180)
-        temp.bolaVelocity.x = Math.cos(initial_ball_angle)
-        temp.bolaVelocity.z = Math.sin(initial_ball_angle)
-        temp.bola.position.x = 0
-        temp.bola.position.z = 0
-        temp.restart = false
+        restart()
     }
-    temp.bola.position.x += temp.bolaVelocity.x
-    temp.bola.position.z += temp.bolaVelocity.z
+
+    if(temp.isStart == true){
+        temp.bola.position.x += temp.bolaVelocity.x
+        temp.bola.position.z += temp.bolaVelocity.z
+    }
 
     //cek apakah bola nabrak tepi, kalau iya pantulkan
     if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) {
@@ -368,7 +386,7 @@ function balls() {
     }
 
     //apabila bola masuk ke dalem lobang
-    // posisi lobang -50, 6, 0
+    // posisi lobang -40, 6, 0
     if(temp.bola.position.x == -40 && temp.bola.position.y == 6 && temp.bola.position.y == 0)
     {
         buzz.pause()
