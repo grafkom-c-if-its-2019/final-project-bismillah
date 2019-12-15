@@ -26,7 +26,7 @@ function Player(id) {
     this.id = id
     this.score = 0
     this.racket = undefined
-    this.scoreMesh = undefined
+    // this.scoreMesh = undefined
 }
 
 Player.prototype.setScoreMesh = function (scene) {
@@ -89,8 +89,10 @@ function GameWorld(id) {
 
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
     this.camera.position.x = 0
-    this.camera.position.y = 200
-    this.camera.position.z = 0
+    // this.camera.position.y = 200
+    // this.camera.position.z = 0
+    this.camera.position.y = 60
+    this.camera.position.z = 130
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.shadowMap.enabled = true
@@ -100,9 +102,15 @@ function GameWorld(id) {
     this.mejaGroup = new THREE.Group()
     this.players = []
 
+    this.lobang = new THREE.Mesh(new THREE.SphereGeometry(2, 50, 50), new THREE.MeshPhongMaterial({ color: 0x000000 }))
+    this.lobang.castShadow = false
+    this.lobang.position.set(-40, 6, 0)
+    this.scene.add(this.lobang)
+
+
     this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0x0000FF }))
     this.bola.castShadow = false
-    this.bola.position.set(0, 6, 0)
+    this.bola.position.set(49, 6, 0)
     this.scene.add(this.bola)
     this.bolaVelocity = new THREE.Vector3()
     this.restart = true
@@ -110,6 +118,7 @@ function GameWorld(id) {
     this.camera.lookAt(this.scene.position)
     document.getElementById('WebGL-output').appendChild(this.renderer.domElement)
 }
+
 
 GameWorld.prototype.createLighting = function () {
     let light = new THREE.AmbientLight(0x111111, 0.2)
@@ -134,10 +143,38 @@ GameWorld.prototype.createLighting = function () {
     this.scene.add(poinlight)
 }
 
+
+GameWorld.prototype.loadBackground = function(){
+    let loader = new THREE.ImageLoader();
+    // load a image resource
+    loader.load(
+        // resource URL
+        'assets/background.jpeg',
+
+        // onLoad callback
+        function ( image ) {
+            // use the image, e.g. draw part of it on a canvas
+            var canvas = document.createElement( 'canvas' );
+            var context = canvas.getContext( '2d' );
+            context.drawImage( image, 50, 50 );
+        },
+
+        // onProgress callback currently not supported
+        undefined,
+
+        // onError callback
+        function () {
+            console.error( 'An error happened.' );
+        }
+    );
+    this.scene.add(loader)
+    console.log('berhasil load');
+}
+
 GameWorld.prototype.createSetMeja = function () {
     // buat bagian meja utama (ada map lapangan)
     let loader = new THREE.TextureLoader()
-    loader.load('assets/tennis_court_grass.jpg', (texture) => {
+    loader.load('assets/golf.jpg', (texture) => {
         let mainMejaGeom = new THREE.BoxGeometry(TABLE_SIZE.w, TABLE_SIZE.h, TABLE_SIZE.d)
         let textureFace = new THREE.MeshLambertMaterial({})
         textureFace.map = texture
@@ -178,32 +215,32 @@ GameWorld.prototype.createSetMeja = function () {
     this.mejaGroup.add(border)
 
     // buat kaki meja
-    let positions = [[-1, 1], [1, 1], [1, -1], [-1, -1]]
-    positions.forEach(position => {
-        let tableLeg = new THREE.Mesh(
-            new THREE.BoxGeometry(8, 30, 8),
-            new THREE.MeshLambertMaterial({ color: 0x352421 }))
-        tableLeg.castShadow = true
-        tableLeg.position.set(TABLE_LEG_POS.x * position[0], TABLE_LEG_POS.y, TABLE_LEG_POS.z * position[1])
-        tableLeg.name = `kakiMeja${position[0]}${position[1]}`
-        this.mejaGroup.add(tableLeg)
-    })
+    // let positions = [[-1, 1], [1, 1], [1, -1], [-1, -1]]
+    // positions.forEach(position => {
+    //     let tableLeg = new THREE.Mesh(
+    //         new THREE.BoxGeometry(8, 30, 8),
+    //         new THREE.MeshLambertMaterial({ color: 0x352421 }))
+    //     tableLeg.castShadow = true
+    //     tableLeg.position.set(TABLE_LEG_POS.x * position[0], TABLE_LEG_POS.y, TABLE_LEG_POS.z * position[1])
+    //     tableLeg.name = `kakiMeja${position[0]}${position[1]}`
+    //     this.mejaGroup.add(tableLeg)
+    // })
     this.scene.add(this.mejaGroup)
 }
 
-
 GameWorld.prototype.createPlayers = function () {
-    [1, -1].forEach(id => {
+    [1].forEach(id => {
         let player = new Player(id)
         player.createRaket((racket) => {
             this.scene.add(racket)
         })
-        player.setScoreMesh(this.scene)
+        // player.setScoreMesh(this.scene)
         this.players.push(player)
     })
 }
 
 GameWorld.prototype.initWorld = function () {
+    // this.loadBackground()
     this.createSetMeja()
     this.createLighting()
     this.createPlayers()
@@ -231,8 +268,8 @@ window.onload = function () {
 }
 
 var pressed_key = {
-    'player_0_up': false,
-    'player_0_down': false,
+    // 'player_0_up': false,
+    // 'player_0_down': false,
     'player_1_up': false,
     'player_1_down': false,
     'change_env': false
@@ -253,7 +290,15 @@ function handle_keydown(event) {
         pressed_key.player_1_up = true
     }
     else if (key_code == 32) {
-        pressed_key.change_env = true
+        if(temp.isStart == false){
+            temp.isStart = true
+        }
+        else{
+            temp.isStart = false
+        }
+    }
+    else if (key_code == 82){
+        restart()
     }
 }
 
@@ -272,6 +317,7 @@ function handle_keyup(event) {
         pressed_key.player_1_up = false
     }
 }
+
 
 var env_status = 1
 
@@ -310,54 +356,77 @@ document.addEventListener("keyup", handle_keyup, false)
 var bounce = new Audio('assets/sound/Ping_Pong_Ball_Hit.mp3');
 var buzz = new Audio('assets/sound/buzz.mp3');
 
+function restart(){
+    var initial_ball_angle = (((Math.random() - 0.5) * 2) * 360) * (Math.PI / 180)
+    temp.bolaVelocity.x = Math.cos(initial_ball_angle)
+    temp.bolaVelocity.z = Math.sin(initial_ball_angle)
+    temp.bola.position.x = 49
+    temp.bola.position.z = 0
+    temp.restart = false
+    temp.isStart = false
+}
+
+
 function balls() {
     if (temp.restart == true) {
-        var initial_ball_angle = (((Math.random() - 0.5) * 2) * 360) * (Math.PI / 180)
-        temp.bolaVelocity.x = Math.cos(initial_ball_angle)
-        temp.bolaVelocity.z = Math.sin(initial_ball_angle)
-        temp.bola.position.x = 0
-        temp.bola.position.z = 0
-        temp.restart = false
+        restart()
     }
-    temp.bola.position.x += temp.bolaVelocity.x
-    temp.bola.position.z += temp.bolaVelocity.z
+
+    if(temp.isStart == true){
+        temp.bola.position.x += temp.bolaVelocity.x
+        temp.bola.position.z += temp.bolaVelocity.z
+    }
 
     //cek apakah bola nabrak tepi, kalau iya pantulkan
     if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) {
         temp.bolaVelocity.z *= -1
     }
+    if (temp.bola.position.x >= 50 || temp.bola.position.x <= -50) {
+        temp.bolaVelocity.x *= -1
+    }
+
+    //apabila bola masuk ke dalem lobang
+    // posisi lobang -40, 6, 0
+    if(temp.bola.position.x == -40 && temp.bola.position.y == 6 && temp.bola.position.y == 0)
+    {
+        buzz.pause()
+        temp.restart = true
+        buzz.play()
+    }
+
+
 
     //cek gol dan raket
-    if (temp.bola.position.x >= 50) {
-        if (temp.bola.position.z >= temp.players[0].racket.position.z - 10 && temp.bola.position.z <= temp.players[0].racket.position.z + 10) {
-            temp.bolaVelocity.x *= -1.05
-            bounce.pause();
-            bounce.currentTime = 0;
-            bounce.play();
-        }
-        else {
-            buzz.pause();
-            buzz.currentTime = 0;
-            buzz.play();
-            temp.restart = true
-            temp.players[1].score += 1
-            temp.players[1].setScoreMesh(temp.scene)
-        }
-    }
-    else if (temp.bola.position.x <= -50) {
-        if (temp.bola.position.z >= temp.players[1].racket.position.z - 10 && temp.bola.position.z <= temp.players[1].racket.position.z + 10) {
-            temp.bolaVelocity.x *= -1.05
-            bounce.pause();
-            bounce.currentTime = 0;
-            bounce.play();
-        }
-        else {
-            buzz.pause();
-            buzz.currentTime = 0;
-            buzz.play();
-            temp.restart = true
-            temp.players[0].score += 1
-            temp.players[0].setScoreMesh(temp.scene)
-        }
-    }
+    // if (temp.bola.position.x >= 50) {
+    //     if (temp.bola.position.z >= temp.players[0].racket.position.z - 10 && temp.bola.position.z <= temp.players[0].racket.position.z + 10) {
+    //         temp.bolaVelocity.x *= -1.05
+    //         bounce.pause();
+    //         bounce.currentTime = 0;
+    //         bounce.play();
+    //     }
+    //     else {
+    //         buzz.pause();
+    //         buzz.currentTime = 0;
+    //         buzz.play();
+    //         temp.restart = true
+    //         temp.players[1].score += 1
+    //         // temp.players[1].setScoreMesh(temp.scene)
+    //     }
+    // }
+    // else if (temp.bola.position.x <= -50) {
+    //     if (temp.bola.position.z >= temp.players[1].racket.position.z - 10 && temp.bola.position.z <= temp.players[1].racket.position.z + 10) {
+    //         temp.bolaVelocity.x *= -1.05
+    //         bounce.pause();
+    //         bounce.currentTime = 0;
+    //         bounce.play();
+    //     }
+    //     else {
+    //         buzz.pause();
+    //         buzz.currentTime = 0;
+    //         buzz.play();
+    //         temp.restart = true
+    //         temp.players[0].score += 1
+    //         // temp.players[0].setScoreMesh(temp.scene)
+    //     }
+    // }
 }
