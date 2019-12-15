@@ -190,7 +190,6 @@ GameWorld.prototype.createPlayers = function () {
 }
 
 GameWorld.prototype.initWorld = function () {
-    // this.loadBackground()
     this.createSetMeja()
     this.createLighting()
     this.createPlayers()
@@ -244,6 +243,7 @@ function handle_keydown(event) {
         pressed_key.player_0_d = true
     }
     else if (key_code == 32) {
+
         if(temp.isStart == false){
             temp.isStart = true
         }
@@ -282,33 +282,46 @@ function handle_keyup(event) {
 var env_status = 1
 
 function handle_racket() {
-    var speed = 1
     var posisiX = temp.players[0].racket.position.x
     var posisiY = temp.players[0].racket.position.y
     var posisiZ = temp.players[0].racket.position.z
 
     if (pressed_key.player_0_up == true) {
         temp.players[0].racket.rotation.y -= 0.1
+        temp.bola.position.x = posisiX-10
+        temp.bola.position.y = posisiY
+        temp.bola.position.z = posisiZ
     }
     if (pressed_key.player_0_down == true) {
         temp.players[0].racket.rotation.y += 0.1
+        temp.bola.position.x = posisiX-10
+        temp.bola.position.y = posisiY
+        temp.bola.position.z = posisiZ
     }
     if (pressed_key.player_0_w == true) {
-        temp.players[0].racket.position.z += speed
+        temp.players[0].racket.position.z += 1
+        temp.bola.position.x = posisiX-10
+        temp.bola.position.y = posisiY
+        temp.bola.position.z = posisiZ
     }
     if (pressed_key.player_0_s == true) {
-        temp.players[0].racket.position.z -= speed
+        temp.players[0].racket.position.z -= 1
+        temp.bola.position.x = posisiX-10
+        temp.bola.position.y = posisiY
+        temp.bola.position.z = posisiZ
     }
     if (pressed_key.player_0_a == true) {
-        temp.players[0].racket.position.x -= speed
+        temp.players[0].racket.position.x -= 1
+        temp.bola.position.x = posisiX-10
+        temp.bola.position.y = posisiY
+        temp.bola.position.z = posisiZ
     }
     if (pressed_key.player_0_d == true) {
-        temp.players[0].racket.position.x += speed
+        temp.players[0].racket.position.x += 1
+        temp.bola.position.x = posisiX-10
+        temp.bola.position.y = posisiY
+        temp.bola.position.z = posisiZ
     }
-
-    temp.bola.position.x = posisiX-10
-    temp.bola.position.y = posisiY
-    temp.bola.position.z = posisiZ
 }
 
 function handle_env_status() 
@@ -331,10 +344,15 @@ var bounce = new Audio('assets/sound/Ping_Pong_Ball_Hit.mp3');
 var buzz = new Audio('assets/sound/buzz.mp3');
 
 function restart(){
+    var posisiX = temp.players[0].racket.position.x
+    var posisiY = temp.players[0].racket.position.y
+    var posisiZ = temp.players[0].racket.position.z
+
     temp.bolaVelocity.x = 0.5
     temp.bolaVelocity.z = 1
-    temp.bola.position.x = 49
-    temp.bola.position.z = 0
+    temp.bola.position.x = posisiX-10
+    temp.bola.position.y = posisiY
+    temp.bola.position.z = posisiZ
     temp.restart = false
     temp.isStart = false
 }
@@ -357,23 +375,31 @@ function balls() {
     //cek apakah bola nabrak tepi, kalau iya pantulkan
     if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) 
     {
+        bounce.pause()
         temp.bolaVelocity.z *= -1
+        bounce.play()
     }
     if (temp.bola.position.x >= 50 || temp.bola.position.x <= -50) 
     {
+        bounce.pause()
         temp.bolaVelocity.x *= -1
+        bounce.play()
     }
     if (temp.bola.position.x >= 17 && temp.bola.position.x <= 23 && temp.bola.position.z <= 11 && temp.bola.position.z >= -11)
     {
+        bounce.pause()
         temp.bolaVelocity.x *= -1
+        bounce.play()
     }
     if (temp.bola.position.x >= -23 && temp.bola.position.x <= -17 && temp.bola.position.z <= 11 && temp.bola.position.z >= -11)
     {
+        bounce.pause()
         temp.bolaVelocity.x *= -1
+        bounce.play()
     }
 
     //apabila bola masuk ke dalem lobang
-    if(temp.bola.position.x <= -39 && temp.bola.position.y >=6 && temp.bola.position.z >= 0 && temp.bola.position.z <=  3)
+    if(temp.bola.position.x <= -39 && temp.bola.position.y >=6 && temp.bola.position.z >= 0 && temp.bola.position.z <=  3 && temp.isStart == true)
     {
         buzz.pause()
         restart()
