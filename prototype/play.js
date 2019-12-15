@@ -51,56 +51,20 @@ Player.prototype.setScoreMesh = function (scene) {
     scene.add(this.scoreMesh)
 }
 
-// function initStats() {
-
-//     var stats = new Stats();
-//     stats.setMode(0); // 0: fps, 1: ms
-
-//     // Align top-left
-//     stats.domElement.style.position = 'absolute';
-//     stats.domElement.style.left = '0px';
-//     stats.domElement.style.top = '0px';
-
-//     document.getElementById("Stats-output").appendChild(stats.domElement);
-
-//     return stats;
-// }
-
 function GameWorld(id) {
     this.id = id
-    this.clock = new THREE.Clock();
-    //this.stats = initStats();
     this.scene = new THREE.Scene()
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
-    
-    this.renderer = new THREE.WebGLRenderer({ antialias: true })
-    this.renderer.shadowMap.enabled = true
-    this.renderer.setClearColor(0xFFFFFF)
-    this.renderer.setSize(window.innerWidth, window.innerHeight)
-
+   
     this.camera.position.x = 0
     // this.camera.position.y = 200
     // this.camera.position.z = 0
     this.camera.position.y = 60
     this.camera.position.z = 130
-    this.camera.lookAt(new THREE.Vector3(0, 0, 0))
-
-    this.trackballControls = new THREE.TrackballControls(this.camera)
-    this.trackballControls.rotateSpeed = 1.0;
-    this.trackballControls.zoomSpeed = 1.0;
-    this.trackballControls.panSpeed = 1.0;
-//        trackballControls.noZoom=false; //original commented
-//        trackballControls.noPan=false; //original commented
-    this.trackballControls.staticMoving = true;
-//        trackballControls.dynamicDampingFactor=0.3; //original commented
-
-    this.ambientLight = new THREE.AmbientLight(0x383838);
-    this.scene.add(this.ambientLight);
-
-    this.spotLight = new THREE.SpotLight(0xffffff);
-    this.spotLight.position.set(300, 300, 300);
-    this.spotLight.intensity = 1;
-    this.scene.add(this.spotLight);
+    
+    this.renderer = new THREE.WebGLRenderer({ antialias: true })
+    this.renderer.shadowMap.enabled = true
+    this.renderer.setClearColor(0xFFFFFF)
+    this.renderer.setSize(window.innerWidth, window.innerHeight)
 
     this.mejaGroup = new THREE.Group()
     this.players = []
@@ -120,8 +84,8 @@ function GameWorld(id) {
     this.hole = new THREE.Mesh(new THREE.CylinderGeometry(3,3,1,32), new THREE.MeshPhongMaterial({color: 0x000000}))
     this.hole.position.set(-40,4,0);
     this.scene.add(this.hole);
- 
-    this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0x0000FF }))
+
+    this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0xffffff }))
     this.bola.castShadow = false
     this.bola.position.set(49, 6, 0)
     this.scene.add(this.bola)
@@ -130,11 +94,8 @@ function GameWorld(id) {
 
     this.camera.lookAt(this.scene.position)
     document.getElementById('WebGL-output').appendChild(this.renderer.domElement)
-
-    this.step = 0
-
-
 }
+
 
 
 GameWorld.prototype.createLighting = function () {
@@ -314,8 +275,15 @@ function balls() {
     }
 
     if(temp.isStart == true){
+
         temp.bola.position.x += temp.bolaVelocity.x
         temp.bola.position.z += temp.bolaVelocity.z
+    }
+    else
+    {
+        var initial_ball_angle = (((Math.random() - 0.5) * 2) * 360) * (Math.PI / 180)
+        temp.bolaVelocity.x = Math.cos(initial_ball_angle)
+        temp.bolaVelocity.z = Math.sin(initial_ball_angle)
     }
 
   //pantulan bola ketika nabrak tepi atau penghalang
