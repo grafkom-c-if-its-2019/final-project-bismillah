@@ -1,4 +1,4 @@
-# final-project-bismillah
+# Bismillah - Grafika Komputer C
 
 Todo List Bismillah:
 1. Lapangan mini golf
