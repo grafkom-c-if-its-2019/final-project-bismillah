@@ -1,4 +1,12 @@
 # final-project-bismillah
+
+## How to use this repository
+1. `git clone https://github.com/grafkom-c-if-its-2019/final-project-bismillah`
+2. `cd ~/final-project-bismillah`
+3. Open with https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer 's live server
+
+## Development
+
 final-project-bismillah created by GitHub Classroom
 
 Todo List Bismillah:
