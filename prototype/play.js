@@ -192,17 +192,6 @@ GameWorld.prototype.createSetMeja = function () {
     border.name = 'tepianMeja'
     this.mejaGroup.add(border)
 
-    // buat kaki meja
-    // let positions = [[-1, 1], [1, 1], [1, -1], [-1, -1]]
-    // positions.forEach(position => {
-    //     let tableLeg = new THREE.Mesh(
-    //         new THREE.BoxGeometry(8, 30, 8),
-    //         new THREE.MeshLambertMaterial({ color: 0x352421 }))
-    //     tableLeg.castShadow = true
-    //     tableLeg.position.set(TABLE_LEG_POS.x * position[0], TABLE_LEG_POS.y, TABLE_LEG_POS.z * position[1])
-    //     tableLeg.name = `kakiMeja${position[0]}${position[1]}`
-    //     this.mejaGroup.add(tableLeg)
-    // })
     this.scene.add(this.mejaGroup)
 }
 
@@ -369,40 +358,4 @@ function balls() {
         restart()
         buzz.play()
     }
-
-
-
-    //cek gol dan raket
-    // if (temp.bola.position.x >= 50) {
-    //     if (temp.bola.position.z >= temp.players[0].racket.position.z - 10 && temp.bola.position.z <= temp.players[0].racket.position.z + 10) {
-    //         temp.bolaVelocity.x *= -1.05
-    //         bounce.pause();
-    //         bounce.currentTime = 0;
-    //         bounce.play();
-    //     }
-    //     else {
-    //         buzz.pause();
-    //         buzz.currentTime = 0;
-    //         buzz.play();
-    //         temp.restart = true
-    //         temp.players[1].score += 1
-    //         // temp.players[1].setScoreMesh(temp.scene)
-    //     }
-    // }
-    // else if (temp.bola.position.x <= -50) {
-    //     if (temp.bola.position.z >= temp.players[1].racket.position.z - 10 && temp.bola.position.z <= temp.players[1].racket.position.z + 10) {
-    //         temp.bolaVelocity.x *= -1.05
-    //         bounce.pause();
-    //         bounce.currentTime = 0;
-    //         bounce.play();
-    //     }
-    //     else {
-    //         buzz.pause();
-    //         buzz.currentTime = 0;
-    //         buzz.play();
-    //         temp.restart = true
-    //         temp.players[0].score += 1
-    //         // temp.players[0].setScoreMesh(temp.scene)
-    //     }
-    // }
 }
