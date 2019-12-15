@@ -82,13 +82,13 @@ function GameWorld(id) {
     this.block2.position.set(20,6,0);
     this.scene.add(this.block2);
 
-    this.hole = new THREE.Mesh(new THREE.CylinderGeometry(2,2,1,32), new THREE.MeshPhongMaterial({color: 0x000000}))
+    this.hole = new THREE.Mesh(new THREE.CylinderGeometry(3,3,1,32), new THREE.MeshPhongMaterial({color: 0x000000}))
     this.hole.position.set(-40,4,0);
     this.scene.add(this.hole);
     
-    this.pointer = new THREE.Mesh(new THREE.CylinderGeometry(1,1,20,32), new THREE.MeshPhongMaterial({color: 0x6977d8}))
-    this.pointer.position.set(0,20,0);
-    this.scene.add(this.pointer);
+    // this.stick = new THREE.Mesh(new THREE.CylinderGeometry(1,1,20,32), new THREE.MeshPhongMaterial({color: 0x6977d8}))
+    // this.stick.position.set(0,20,0);
+    // this.scene.add(this.stick);
 
     this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0x0000FF }))
     this.bola.castShadow = false
@@ -379,21 +379,6 @@ function balls() {
             temp.bolaVelocity.x *= -1
         }
     }
-    // if(temp.bola.position.z <= 12 && temp.bola.position.z >= -12)
-    // {
-    //     if (temp.bola.position.x >= 15.5 && temp.bola.position.x < 24.5 || temp.bola.position.x >= -24.5 && temp.bola.position.x <= -15.5)
-    //     {
-    //         temp.bolaVelocity.z *= -1
-    //     }
-    // }
-    // if(temp.bola.position.z <= 12 && temp.bola.position.z >= -12)
-    // {
-    //     if(temp.bola.position.x < 24.5 && temp.bola.position.x > 15.5 || temp.bola.position.x > -24.5 && temp.bola.position.x < -15.5)
-    //     {
-    //         temp.bolaVelocity.z *= -1;
-    //     }
-    // }
-
        //apabila bola masuk ke dalem lobang
     // posisi lobang -40, 6, 0
     if(temp.bola.position.x <= -39 && temp.bola.position.y >=6 && temp.bola.position.z >= 0 && temp.bola.position.z <=  3)
