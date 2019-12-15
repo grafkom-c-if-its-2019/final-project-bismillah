@@ -5,6 +5,9 @@
 2. `cd ~/final-project-bismillah`
 3. Open with https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer 's live server
 
+## Sneak peek
+![image](img/1.png)
+
 ## Development
 
 final-project-bismillah created by GitHub Classroom
@@ -17,14 +20,6 @@ Todo List Bismillah:
 4. Lobang golf [OK]
 5. Translasi bola golf
 6. Tongkat pukul golf (power, arah) -> masih horizontal
-<<<<<<< HEAD
 7. Bola mantul
 8. Bola masuk lobang, habis itu restart game
 9. Gimball buat papan golf
-=======
-7. Bola mantul [OK]
-8. Bola masuk lobang, habis itu restart game [OK]
-9. Add gimball [not yet tested]
-
-coba kalo di branch aufa gimana
->>>>>>> Aufa
