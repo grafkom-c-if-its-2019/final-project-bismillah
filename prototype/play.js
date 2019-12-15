@@ -326,8 +326,9 @@ var bounce = new Audio('assets/sound/Ping_Pong_Ball_Hit.mp3');
 var buzz = new Audio('assets/sound/buzz.mp3');
 
 function restart(){
-    temp.bolaVelocity.x = 0.5
-    temp.bolaVelocity.z = 1
+    var initial_ball_angle = (((Math.random() - 0.5) * 2) * 360) * (Math.PI / 180)
+    temp.bolaVelocity.x = Math.cos(initial_ball_angle)
+    temp.bolaVelocity.z = Math.sin(initial_ball_angle)
     temp.bola.position.x = 49
     temp.bola.position.z = 0
     temp.restart = false
@@ -354,15 +355,44 @@ function balls() {
     {
         temp.bolaVelocity.x *= -1
     }
-    if (temp.bola.position.x >= 17 && temp.bola.position.x <= 23 && temp.bola.position.z <= 11 && temp.bola.position.z >= -11)
+    if (temp.bola.position.x >= 15.5 && temp.bola.position.x < 24.5)
     {
-        temp.bolaVelocity.x *= -1
+        if(temp.bola.position.z <= 12 && temp.bola.position.z > 10 || temp.bola.position.z <= -10 && temp.bola.position.z > -12)
+        {
+            temp.bolaVelocity.z *= -1
+        }
+
+        if(temp.bola.position.z <= 10 && temp.bola.position.z >= -10)
+        {
+            temp.bolaVelocity.x *= -1
+        }
     }
-    if (temp.bola.position.x >= -23 && temp.bola.position.x <= -17 && temp.bola.position.z <= 11 && temp.bola.position.z >= -11)
+    if (temp.bola.position.x >= -24.5 && temp.bola.position.x <= -15.5)
     {
-        temp.bolaVelocity.x *= -1
+        if(temp.bola.position.z <= 12 && temp.bola.position.z > 10 || temp.bola.position.z <= -10 && temp.bola.position.z > -12)
+        {
+            temp.bolaVelocity.z *= -1
+        }
+
+        if(temp.bola.position.z <= 10 && temp.bola.position.z >= -10)
+        {
+            temp.bolaVelocity.x *= -1
+        }
     }
-    if(temp.bola.position.x )
+    // if(temp.bola.position.z <= 12 && temp.bola.position.z >= -12)
+    // {
+    //     if (temp.bola.position.x >= 15.5 && temp.bola.position.x < 24.5 || temp.bola.position.x >= -24.5 && temp.bola.position.x <= -15.5)
+    //     {
+    //         temp.bolaVelocity.z *= -1
+    //     }
+    // }
+    // if(temp.bola.position.z <= 12 && temp.bola.position.z >= -12)
+    // {
+    //     if(temp.bola.position.x < 24.5 && temp.bola.position.x > 15.5 || temp.bola.position.x > -24.5 && temp.bola.position.x < -15.5)
+    //     {
+    //         temp.bolaVelocity.z *= -1;
+    //     }
+    // }
 
        //apabila bola masuk ke dalem lobang
     // posisi lobang -40, 6, 0
