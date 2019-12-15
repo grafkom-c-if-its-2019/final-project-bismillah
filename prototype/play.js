@@ -344,6 +344,9 @@ var bounce = new Audio('assets/sound/Ping_Pong_Ball_Hit.mp3');
 var buzz = new Audio('assets/sound/buzz.mp3');
 
 function restart(){
+    temp.players[0].racket.position.x = 48
+    temp.players[0].racket.position.z = 0
+
     var posisiX = temp.players[0].racket.position.x
     var posisiY = temp.players[0].racket.position.y
     var posisiZ = temp.players[0].racket.position.z
@@ -367,9 +370,6 @@ function balls() {
         temp.bola.position.x += temp.bolaVelocity.x
         temp.bola.position.z += temp.bolaVelocity.z
 
-    }
-    else{
-        
     }
 
     //cek apakah bola nabrak tepi, kalau iya pantulkan
