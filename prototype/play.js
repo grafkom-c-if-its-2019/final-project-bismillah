@@ -286,41 +286,49 @@ function handle_racket() {
     var posisiY = temp.players[0].racket.position.y
     var posisiZ = temp.players[0].racket.position.z
 
-    if (pressed_key.player_0_up == true) {
-        temp.players[0].racket.rotation.y -= 0.1
-        temp.bola.position.x = posisiX-10
-        temp.bola.position.y = posisiY
-        temp.bola.position.z = posisiZ
+    if(temp.bola.position.z >= 25 || temp.bola.position.z <= -25 || temp.bola.position.x >= 50 || temp.bola.position.x <= -50)
+    {
+        restart()
     }
-    if (pressed_key.player_0_down == true) {
-        temp.players[0].racket.rotation.y += 0.1
-        temp.bola.position.x = posisiX-10
-        temp.bola.position.y = posisiY
-        temp.bola.position.z = posisiZ
-    }
-    if (pressed_key.player_0_w == true) {
-        temp.players[0].racket.position.z += 1
-        temp.bola.position.x = posisiX-10
-        temp.bola.position.y = posisiY
-        temp.bola.position.z = posisiZ
-    }
-    if (pressed_key.player_0_s == true) {
-        temp.players[0].racket.position.z -= 1
-        temp.bola.position.x = posisiX-10
-        temp.bola.position.y = posisiY
-        temp.bola.position.z = posisiZ
-    }
-    if (pressed_key.player_0_a == true) {
-        temp.players[0].racket.position.x -= 1
-        temp.bola.position.x = posisiX-10
-        temp.bola.position.y = posisiY
-        temp.bola.position.z = posisiZ
-    }
-    if (pressed_key.player_0_d == true) {
-        temp.players[0].racket.position.x += 1
-        temp.bola.position.x = posisiX-10
-        temp.bola.position.y = posisiY
-        temp.bola.position.z = posisiZ
+
+    else
+    {
+        if (pressed_key.player_0_up == true) {
+            temp.players[0].racket.rotation.y -= 0.1
+            temp.bola.position.x = posisiX-10
+            temp.bola.position.y = posisiY
+            temp.bola.position.z = posisiZ
+        }
+        if (pressed_key.player_0_down == true) {
+            temp.players[0].racket.rotation.y += 0.1
+            temp.bola.position.x = posisiX-10
+            temp.bola.position.y = posisiY
+            temp.bola.position.z = posisiZ
+        }
+        if (pressed_key.player_0_w == true) {
+            temp.players[0].racket.position.z += 1
+            temp.bola.position.x = posisiX-10
+            temp.bola.position.y = posisiY
+            temp.bola.position.z = posisiZ
+        }
+        if (pressed_key.player_0_s == true) {
+            temp.players[0].racket.position.z -= 1
+            temp.bola.position.x = posisiX-10
+            temp.bola.position.y = posisiY
+            temp.bola.position.z = posisiZ
+        }
+        if (pressed_key.player_0_a == true) {
+            temp.players[0].racket.position.x -= 1
+            temp.bola.position.x = posisiX-10
+            temp.bola.position.y = posisiY
+            temp.bola.position.z = posisiZ
+        }
+        if (pressed_key.player_0_d == true) {
+            temp.players[0].racket.position.x += 1
+            temp.bola.position.x = posisiX-10
+            temp.bola.position.y = posisiY
+            temp.bola.position.z = posisiZ
+        }
     }
 }
 
