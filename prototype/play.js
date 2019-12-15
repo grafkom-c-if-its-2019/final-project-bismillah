@@ -86,7 +86,7 @@ function GameWorld(id) {
     this.hole.position.set(-40,4,0);
     this.scene.add(this.hole);
 
-    this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0x0000FF }))
+    this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0xffffff }))
     this.bola.castShadow = false
     this.bola.position.set(49, 6, 0)
     this.scene.add(this.bola)
@@ -96,6 +96,7 @@ function GameWorld(id) {
     this.camera.lookAt(this.scene.position)
     document.getElementById('WebGL-output').appendChild(this.renderer.domElement)
 }
+
 
 
 GameWorld.prototype.createLighting = function () {
@@ -275,8 +276,15 @@ function balls() {
     }
 
     if(temp.isStart == true){
+        
         temp.bola.position.x += temp.bolaVelocity.x
         temp.bola.position.z += temp.bolaVelocity.z
+    }
+    else
+    {
+        var initial_ball_angle = (((Math.random() - 0.5) * 2) * 360) * (Math.PI / 180)
+        temp.bolaVelocity.x = Math.cos(initial_ball_angle)
+        temp.bolaVelocity.z = Math.sin(initial_ball_angle)
     }
 
     //pantulan bola ketika nabrak tepi atau penghalang
