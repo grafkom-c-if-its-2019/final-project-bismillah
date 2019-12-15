@@ -10,3 +10,4 @@ Todo List Bismillah:
 6. Tongkat pukul golf (power, arah) -> masih horizontal
 7. Bola mantul [OK]
 8. Bola masuk lobang, habis itu restart game [OK]
+9. Add gimball
