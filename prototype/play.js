@@ -65,7 +65,6 @@ Player.prototype.createRaket = function (callback) {
 function GameWorld(id) {
     this.id = id
     this.scene = new THREE.Scene()
-<<<<<<< HEAD
    
     this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
     this.camera.position.set( 85, 100, 65 );
@@ -77,16 +76,6 @@ function GameWorld(id) {
     // this.camera.position.y = 60
     // this.camera.position.z = 130
     
-=======
-
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
-    this.camera.position.x = 0
-    this.camera.position.y = 200
-    this.camera.position.z = 0
-    // this.camera.position.y = 60
-    // this.camera.position.z = 130
-
->>>>>>> cc734f60bf0e07e31df5e2870868a93ca5075a4f
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.shadowMap.enabled = true
     this.renderer.setClearColor(0xFFFFFF)
@@ -110,10 +99,6 @@ function GameWorld(id) {
     this.hole = new THREE.Mesh(new THREE.CylinderGeometry(3,3,1,32), new THREE.MeshPhongMaterial({color: 0x000000}))
     this.hole.position.set(-40,4,0);
     this.scene.add(this.hole);
-<<<<<<< HEAD
-=======
-
->>>>>>> cc734f60bf0e07e31df5e2870868a93ca5075a4f
 
     this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0xffffff }))
     this.bola.castShadow = false
@@ -263,30 +248,7 @@ var pressed_key = {
 
 function handle_keydown(event) {
     var key_code = event.which
-<<<<<<< HEAD
     if (key_code == 32) {
-=======
-    if (key_code == 38) {
-        pressed_key.player_0_up = true
-    }
-    else if (key_code == 40) {
-        pressed_key.player_0_down = true
-    }
-    else if (key_code == 83) {
-        pressed_key.player_0_w = true
-    }
-    else if (key_code == 87) {
-        pressed_key.player_0_s = true
-    }
-    else if (key_code == 65) {
-        pressed_key.player_0_a = true
-    }
-    else if (key_code == 68) {
-        pressed_key.player_0_d = true
-    }
-    else if (key_code == 32) {
-
->>>>>>> cc734f60bf0e07e31df5e2870868a93ca5075a4f
         if(temp.isStart == false){
             temp.isStart = true
         }
@@ -299,124 +261,17 @@ function handle_keydown(event) {
     }
 }
 
-<<<<<<< HEAD
-=======
-function handle_keyup(event) {
-    var key_code = event.which
-    if (key_code == 38) {
-        pressed_key.player_0_up = false
-    }
-    else if (key_code == 40) {
-        pressed_key.player_0_down = false
-    }
-    else if (key_code == 83) {
-        pressed_key.player_0_w = false
-    }
-    else if (key_code == 87) {
-        pressed_key.player_0_s = false
-    }
-    else if (key_code == 65) {
-        pressed_key.player_0_a = false
-    }
-    else if (key_code == 68) {
-        pressed_key.player_0_d = false
-    }
-}
-
-
-var env_status = 1
-
-function handle_racket() {
-    var posisiX = temp.players[0].racket.position.x
-    var posisiY = temp.players[0].racket.position.y
-    var posisiZ = temp.players[0].racket.position.z
-
-    if(temp.players[0].racket.position.z >= 25 || temp.players[0].racket.position.z <= -25 || temp.players[0].racket.position.x >= 50 || temp.players[0].racket.position.x <= -50)
-    {
-        restart()
-    }
-
-    else
-    {
-        if (pressed_key.player_0_up == true) {
-            temp.players[0].racket.rotation.y -= 0.1
-            temp.bola.position.x = posisiX-10
-            temp.bola.position.y = posisiY
-            temp.bola.position.z = posisiZ
-        }
-        if (pressed_key.player_0_down == true) {
-            temp.players[0].racket.rotation.y += 0.1
-            temp.bola.position.x = posisiX-10
-            temp.bola.position.y = posisiY
-            temp.bola.position.z = posisiZ
-        }
-        if (pressed_key.player_0_w == true) {
-            temp.players[0].racket.position.z += 1
-            temp.bola.position.x = posisiX-10
-            temp.bola.position.y = posisiY
-            temp.bola.position.z = posisiZ
-        }
-        if (pressed_key.player_0_s == true) {
-            temp.players[0].racket.position.z -= 1
-            temp.bola.position.x = posisiX-10
-            temp.bola.position.y = posisiY
-            temp.bola.position.z = posisiZ
-        }
-        if (pressed_key.player_0_a == true) {
-            temp.players[0].racket.position.x -= 1
-            temp.bola.position.x = posisiX-10
-            temp.bola.position.y = posisiY
-            temp.bola.position.z = posisiZ
-        }
-        if (pressed_key.player_0_d == true) {
-            temp.players[0].racket.position.x += 1
-            temp.bola.position.x = posisiX-10
-            temp.bola.position.y = posisiY
-            temp.bola.position.z = posisiZ
-        }
-    }
-}
-
-function handle_env_status() 
-{
-    if (pressed_key.change_env == true) {
-        if (env_status == 3) {
-            env_status = 1
-        }
-        else {
-            env_status += 1
-        }
-        pressed_key.change_env = false
-    }
-}
-
->>>>>>> cc734f60bf0e07e31df5e2870868a93ca5075a4f
 document.addEventListener("keydown", handle_keydown, false);
 
 var bounce = new Audio('assets/sound/Ping_Pong_Ball_Hit.mp3');
 var buzz = new Audio('assets/sound/buzz.mp3');
 
 function restart(){
-<<<<<<< HEAD
     var initial_ball_angle = (((Math.random() - 0.5) * 2) * 360) * (Math.PI / 180)
     temp.bolaVelocity.x = Math.cos(initial_ball_angle)
     temp.bolaVelocity.z = Math.sin(initial_ball_angle)
     temp.bola.position.x = 49
     temp.bola.position.z = 0
-=======
-    temp.players[0].racket.position.x = 48
-    temp.players[0].racket.position.z = 0
-
-    var posisiX = temp.players[0].racket.position.x
-    var posisiY = temp.players[0].racket.position.y
-    var posisiZ = temp.players[0].racket.position.z
-
-    temp.bolaVelocity.x = 0.5
-    temp.bolaVelocity.z = 1
-    temp.bola.position.x = posisiX-10
-    temp.bola.position.y = posisiY
-    temp.bola.position.z = posisiZ
->>>>>>> cc734f60bf0e07e31df5e2870868a93ca5075a4f
     temp.restart = false
     temp.isStart = false
 }
@@ -440,10 +295,7 @@ function balls() {
         temp.bolaVelocity.z = Math.sin(initial_ball_angle)
     }
 
-<<<<<<< HEAD
   //pantulan bola ketika nabrak tepi atau penghalang
-=======
->>>>>>> cc734f60bf0e07e31df5e2870868a93ca5075a4f
     if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) 
     {
         bounce.pause()
@@ -458,7 +310,6 @@ function balls() {
     }
     if (temp.bola.position.x >= 15.5 && temp.bola.position.x < 24.5)
     {
-<<<<<<< HEAD
         if(temp.bola.position.z <= 12 && temp.bola.position.z > 10 || temp.bola.position.z <= -10 && temp.bola.position.z > -12)
         {
             temp.bolaVelocity.z *= -1
@@ -468,15 +319,9 @@ function balls() {
         {
             temp.bolaVelocity.x *= -1
         }
-=======
-        bounce.pause()
-        temp.bolaVelocity.x *= -1
-        bounce.play()
->>>>>>> cc734f60bf0e07e31df5e2870868a93ca5075a4f
     }
     if (temp.bola.position.x >= -24.5 && temp.bola.position.x <= -15.5)
     {
-<<<<<<< HEAD
         if(temp.bola.position.z <= 12 && temp.bola.position.z > 10 || temp.bola.position.z <= -10 && temp.bola.position.z > -12)
         {
             temp.bolaVelocity.z *= -1
@@ -490,15 +335,6 @@ function balls() {
        //apabila bola masuk ke dalem lobang
     // posisi lobang -40, 6, 0
     if(temp.bola.position.x <= -39 && temp.bola.position.y >=6 && temp.bola.position.z >= 0 && temp.bola.position.z <=  3)
-=======
-        bounce.pause()
-        temp.bolaVelocity.x *= -1
-        bounce.play()
-    }
-
-    //apabila bola masuk ke dalem lobang
-    if(temp.bola.position.x <= -39 && temp.bola.position.y >=6 && temp.bola.position.z >= 0 && temp.bola.position.z <=  3 && temp.isStart == true)
->>>>>>> cc734f60bf0e07e31df5e2870868a93ca5075a4f
     {
         buzz.pause()
         restart()
