@@ -8,5 +8,5 @@ Todo List Bismillah:
 4. Lobang golf [OK]
 5. Translasi bola golf
 6. Tongkat pukul golf (power, arah) -> masih horizontal
-7. Bola mantul
-8. Bola masuk lobang, habis itu restart game
+7. Bola mantul [OK]
+8. Bola masuk lobang, habis itu restart game [OK]
