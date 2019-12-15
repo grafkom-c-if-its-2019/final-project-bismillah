@@ -51,38 +51,6 @@ Player.prototype.setScoreMesh = function (scene) {
     scene.add(this.scoreMesh)
 }
 
-Player.prototype.createRaket = function (callback) {
-    let mtlLoader = new THREE.MTLLoader()
-    mtlLoader.load('assets/raket_red.mtl', materials => {
-        materials.preload()
-        let objLoader = new THREE.OBJLoader()
-        objLoader.setMaterials(materials)
-        objLoader.load('assets/raket_red.obj', obj => {
-            obj.children.forEach(element => {
-                element.geometry.center()
-                element.geometry.computeBoundingBox()
-            })
-            obj.scale.x = 8
-            obj.scale.y = 10
-            obj.scale.z = 8
-            obj.children.forEach(element => {
-                element.geometry.computeFaceNormals()
-                element.geometry.computeVertexNormals()
-                element.geometry.computeBoundingBox()
-            })
-            obj.rotation.y = -0.5 * Math.PI
-            obj.position.y = 8
-            obj.position.z = 0
-            obj.position.x = this.id * 55
-            obj.castShadow = true
-            this.racket = obj
-            this.racket.children[0].material.shininess = 10
-            callback(this.racket)
-        })
-    })
-}
-
-
 function GameWorld(id) {
     this.id = id
     this.scene = new THREE.Scene()
@@ -102,11 +70,21 @@ function GameWorld(id) {
     this.mejaGroup = new THREE.Group()
     this.players = []
 
-    this.lobang = new THREE.Mesh(new THREE.SphereGeometry(2, 50, 50), new THREE.MeshPhongMaterial({ color: 0x000000 }))
-    this.lobang.castShadow = false
-    this.lobang.position.set(-40, 6, 0)
-    this.scene.add(this.lobang)
+    var loader = new THREE.CubeTextureLoader();
+    loader.setPath('assets/textures/');
+    var textureCube = loader.load(['sideX.jpg','sideX.jpg','sideY.jpg','sideY.jpg','sideZ.jpg','sideZ.jpg']);
 
+    this.block1 = new THREE.Mesh(new THREE.BoxGeometry(5,5,20), new THREE.MeshPhongMaterial({color: 0xffffff, envMap: textureCube}))
+    this.block1.position.set(-20,6,0);
+    this.scene.add(this.block1);
+
+    this.block2 = new THREE.Mesh(new THREE.BoxGeometry(5,5,20), new THREE.MeshPhongMaterial({color: 0xffffff, envMap: textureCube}))
+    this.block2.position.set(20,6,0);
+    this.scene.add(this.block2);
+
+    this.hole = new THREE.Mesh(new THREE.CylinderGeometry(2,2,1,32), new THREE.MeshPhongMaterial({color: 0x000000}))
+    this.hole.position.set(-40,4,0);
+    this.scene.add(this.hole);
 
     this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0x0000FF }))
     this.bola.castShadow = false
@@ -231,9 +209,7 @@ GameWorld.prototype.createSetMeja = function () {
 GameWorld.prototype.createPlayers = function () {
     [1].forEach(id => {
         let player = new Player(id)
-        player.createRaket((racket) => {
-            this.scene.add(racket)
-        })
+        
         // player.setScoreMesh(this.scene)
         this.players.push(player)
     })
@@ -385,12 +361,12 @@ function balls() {
         temp.bolaVelocity.x *= -1
     }
 
-    //apabila bola masuk ke dalem lobang
+       //apabila bola masuk ke dalem lobang
     // posisi lobang -40, 6, 0
-    if(temp.bola.position.x == -40 && temp.bola.position.y == 6 && temp.bola.position.y == 0)
+    if(temp.bola.position.x <= -40 && temp.bola.position.y >=6 && temp.bola.position.z >= 0 && temp.bola.position.z <=  3)
     {
         buzz.pause()
-        temp.restart = true
+        restart()
         buzz.play()
     }
 
