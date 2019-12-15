@@ -89,10 +89,10 @@ function GameWorld(id) {
 
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
     this.camera.position.x = 0
-    // this.camera.position.y = 200
-    // this.camera.position.z = 0
-    this.camera.position.y = 60
-    this.camera.position.z = 130
+    this.camera.position.y = 200
+    this.camera.position.z = 0
+    // this.camera.position.y = 60
+    // this.camera.position.z = 130
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.shadowMap.enabled = true
@@ -101,6 +101,12 @@ function GameWorld(id) {
 
     this.mejaGroup = new THREE.Group()
     this.players = []
+
+    this.lobang = new THREE.Mesh(new THREE.SphereGeometry(2, 50, 50), new THREE.MeshPhongMaterial({ color: 0x000000 }))
+    this.lobang.castShadow = false
+    this.lobang.position.set(-50, 6, 0)
+    this.scene.add(this.lobang)
+
 
     this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0x0000FF }))
     this.bola.castShadow = false
@@ -357,28 +363,31 @@ function balls() {
     if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) {
         temp.bolaVelocity.z *= -1
     }
-    if (temp.bola.position.x <= -50) {
+    if (temp.bola.position.x >= 50 || temp.bola.position.x <= -50) {
         temp.bolaVelocity.x *= -1
     }
 
+    //apabila bola masuk ke dalem lobang
+    
+
 
     //cek gol dan raket
-    if (temp.bola.position.x >= 50) {
-        if (temp.bola.position.z >= temp.players[0].racket.position.z - 10 && temp.bola.position.z <= temp.players[0].racket.position.z + 10) {
-            temp.bolaVelocity.x *= -1.05
-            bounce.pause();
-            bounce.currentTime = 0;
-            bounce.play();
-        }
-        else {
-            buzz.pause();
-            buzz.currentTime = 0;
-            buzz.play();
-            temp.restart = true
-            temp.players[1].score += 1
-            // temp.players[1].setScoreMesh(temp.scene)
-        }
-    }
+    // if (temp.bola.position.x >= 50) {
+    //     if (temp.bola.position.z >= temp.players[0].racket.position.z - 10 && temp.bola.position.z <= temp.players[0].racket.position.z + 10) {
+    //         temp.bolaVelocity.x *= -1.05
+    //         bounce.pause();
+    //         bounce.currentTime = 0;
+    //         bounce.play();
+    //     }
+    //     else {
+    //         buzz.pause();
+    //         buzz.currentTime = 0;
+    //         buzz.play();
+    //         temp.restart = true
+    //         temp.players[1].score += 1
+    //         // temp.players[1].setScoreMesh(temp.scene)
+    //     }
+    // }
     // else if (temp.bola.position.x <= -50) {
     //     if (temp.bola.position.z >= temp.players[1].racket.position.z - 10 && temp.bola.position.z <= temp.players[1].racket.position.z + 10) {
     //         temp.bolaVelocity.x *= -1.05
