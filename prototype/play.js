@@ -89,10 +89,10 @@ function GameWorld(id) {
 
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
     this.camera.position.x = 0
-    this.camera.position.y = 200
-    this.camera.position.z = 0
-    // this.camera.position.y = 60
-    // this.camera.position.z = 130
+    // this.camera.position.y = 200
+    // this.camera.position.z = 0
+    this.camera.position.y = 60
+    this.camera.position.z = 130
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.shadowMap.enabled = true
@@ -104,7 +104,7 @@ function GameWorld(id) {
 
     this.lobang = new THREE.Mesh(new THREE.SphereGeometry(2, 50, 50), new THREE.MeshPhongMaterial({ color: 0x000000 }))
     this.lobang.castShadow = false
-    this.lobang.position.set(-50, 6, 0)
+    this.lobang.position.set(-40, 6, 0)
     this.scene.add(this.lobang)
 
 
@@ -215,16 +215,16 @@ GameWorld.prototype.createSetMeja = function () {
     this.mejaGroup.add(border)
 
     // buat kaki meja
-    let positions = [[-1, 1], [1, 1], [1, -1], [-1, -1]]
-    positions.forEach(position => {
-        let tableLeg = new THREE.Mesh(
-            new THREE.BoxGeometry(8, 30, 8),
-            new THREE.MeshLambertMaterial({ color: 0x352421 }))
-        tableLeg.castShadow = true
-        tableLeg.position.set(TABLE_LEG_POS.x * position[0], TABLE_LEG_POS.y, TABLE_LEG_POS.z * position[1])
-        tableLeg.name = `kakiMeja${position[0]}${position[1]}`
-        this.mejaGroup.add(tableLeg)
-    })
+    // let positions = [[-1, 1], [1, 1], [1, -1], [-1, -1]]
+    // positions.forEach(position => {
+    //     let tableLeg = new THREE.Mesh(
+    //         new THREE.BoxGeometry(8, 30, 8),
+    //         new THREE.MeshLambertMaterial({ color: 0x352421 }))
+    //     tableLeg.castShadow = true
+    //     tableLeg.position.set(TABLE_LEG_POS.x * position[0], TABLE_LEG_POS.y, TABLE_LEG_POS.z * position[1])
+    //     tableLeg.name = `kakiMeja${position[0]}${position[1]}`
+    //     this.mejaGroup.add(tableLeg)
+    // })
     this.scene.add(this.mejaGroup)
 }
 
@@ -368,7 +368,14 @@ function balls() {
     }
 
     //apabila bola masuk ke dalem lobang
-    
+    // posisi lobang -50, 6, 0
+    if(temp.bola.position.x == -40 && temp.bola.position.y == 6 && temp.bola.position.y == 0)
+    {
+        buzz.pause()
+        temp.restart = true
+        buzz.play()
+    }
+
 
 
     //cek gol dan raket
