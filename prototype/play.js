@@ -214,7 +214,7 @@ window.onload = function () {
     temp = new GameWorld(1)
     temp.initWorld()
     temp.render()
-    console.log(temp)
+    // console.log(temp)
 }
 
 var pressed_key = {
@@ -305,6 +305,10 @@ function handle_racket() {
     if (pressed_key.player_0_d == true) {
         temp.players[0].racket.position.x += speed
     }
+
+    temp.bola.position.x = posisiX-10
+    temp.bola.position.y = posisiY
+    temp.bola.position.z = posisiZ
 }
 
 function handle_env_status() 
