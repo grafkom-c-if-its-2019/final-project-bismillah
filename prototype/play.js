@@ -372,37 +372,39 @@ function balls() {
         
     }
 
-    //cek apakah bola nabrak tepi, kalau iya pantulkan
-    if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) 
-    {
-        bounce.pause()
-        temp.bolaVelocity.z *= -1
-        bounce.play()
-    }
-    if (temp.bola.position.x >= 50 || temp.bola.position.x <= -50) 
-    {
-        bounce.pause()
-        temp.bolaVelocity.x *= -1
-        bounce.play()
-    }
-    if (temp.bola.position.x >= 17 && temp.bola.position.x <= 23 && temp.bola.position.z <= 11 && temp.bola.position.z >= -11)
-    {
-        bounce.pause()
-        temp.bolaVelocity.x *= -1
-        bounce.play()
-    }
-    if (temp.bola.position.x >= -23 && temp.bola.position.x <= -17 && temp.bola.position.z <= 11 && temp.bola.position.z >= -11)
-    {
-        bounce.pause()
-        temp.bolaVelocity.x *= -1
-        bounce.play()
-    }
+    while(temp.isStart == true){
+        //cek apakah bola nabrak tepi, kalau iya pantulkan
+        if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) 
+        {
+            bounce.pause()
+            temp.bolaVelocity.z *= -1
+            bounce.play()
+        }
+        if (temp.bola.position.x >= 50 || temp.bola.position.x <= -50) 
+        {
+            bounce.pause()
+            temp.bolaVelocity.x *= -1
+            bounce.play()
+        }
+        if (temp.bola.position.x >= 17 && temp.bola.position.x <= 23 && temp.bola.position.z <= 11 && temp.bola.position.z >= -11)
+        {
+            bounce.pause()
+            temp.bolaVelocity.x *= -1
+            bounce.play()
+        }
+        if (temp.bola.position.x >= -23 && temp.bola.position.x <= -17 && temp.bola.position.z <= 11 && temp.bola.position.z >= -11)
+        {
+            bounce.pause()
+            temp.bolaVelocity.x *= -1
+            bounce.play()
+        }
 
-    //apabila bola masuk ke dalem lobang
-    if(temp.bola.position.x <= -39 && temp.bola.position.y >=6 && temp.bola.position.z >= 0 && temp.bola.position.z <=  3 && temp.isStart == true)
-    {
-        buzz.pause()
-        restart()
-        buzz.play()
+        //apabila bola masuk ke dalem lobang
+        if(temp.bola.position.x <= -39 && temp.bola.position.y >=6 && temp.bola.position.z >= 0 && temp.bola.position.z <=  3 && temp.isStart == true)
+        {
+            buzz.pause()
+            restart()
+            buzz.play()
+        }
     }
 }
