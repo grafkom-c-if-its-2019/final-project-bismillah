@@ -1,4 +1,3 @@
-// import '*' as THREE from '../node_modules/three'
 var cube, outer
 var scene, camera, renderer
 
@@ -13,12 +12,6 @@ function init() {
     renderer.shadowMapEnabled = true
     renderer.setClearColor(0xFFFFFF)
     renderer.setSize(window.innerWidth, window.innerHeight)
-
-    // var plane = new THREE.Mesh(new THREE.PlaneGeometry(300, 300), new THREE.MeshLambertMaterial({ color: 0x555555, side: THREE.DoubleSide }))
-    // plane.rotateX(-0.5 * Math.PI)
-    // plane.position.set(0, -35, 0)
-    // plane.receiveShadow = true
-    // scene.add(plane)
 
     var loader = new THREE.TextureLoader()
     loader.load('assets/tennis_court_grass.jpg', function (texture) {
@@ -54,9 +47,6 @@ function init() {
     })
 
     createBorder()
-    createNaruto()
-    createRaket(55, 22)
-    createRaket(-55, -22)
     var light = new THREE.AmbientLight(0x111111, 0.2)
     scene.add(light)
 
@@ -90,39 +80,6 @@ function render() {
     renderer.render(scene, camera)
 }
 
-function createRaket(posx, posz) {
-    var mtlLoader = new THREE.MTLLoader()
-    mtlLoader.load("assets/raket_red.mtl", function (materials) {
-        // console.log('mtl', materials)
-        materials.preload()
-        var objLoader = new THREE.OBJLoader()
-        objLoader.setMaterials(materials)
-
-        objLoader.load("assets/raket_red.obj", function (obj) {
-            obj.children.forEach(element => {
-                element.geometry.center()
-                // console.log('element', element)
-                element.geometry.computeBoundingBox()
-                // console.log('element befor', element.geometry.boundingBox)
-            });
-            obj.scale.x = 8
-            obj.scale.y = 10
-            obj.scale.z = 8
-            obj.children.forEach(element => {
-                element.geometry.computeFaceNormals()
-                element.geometry.computeVertexNormals()
-                element.geometry.computeBoundingBox()
-            });
-            obj.rotation.y = -0.5 * Math.PI
-            obj.position.y = 8
-            obj.position.z = posz
-            obj.position.x = posx
-            obj.castShadow = true
-            scene.add(obj)
-        })
-    })
-}
-
 function createBorder() {
     var smaller = new THREE.Mesh(
         new THREE.BoxGeometry(TABLE_SIZE.w, TABLE_SIZE.h + 4, TABLE_SIZE.d),
@@ -142,83 +99,6 @@ function createBorder() {
     outer.geometry.computeVertexNormals()
     scene.add(outer)
     console.log(outer)
-}
-
-function createNaruto() {
-    var head_materials = [
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/head_right.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/head_left.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/head_top.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/head_bottom.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/head_front.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/head_back.jpg')
-        })
-    ];
-    head_materials = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), head_materials);
-    head_materials.position.set(0, 30, -60)
-    head_materials.castShadow = true
-    scene.add(head_materials);
-
-    var body_materials = [
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/body_right.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/body_left.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/body_top.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/body_bottom.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/body_front.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/body_back.jpg')
-        })
-    ];
-    body_materials = new THREE.Mesh(new THREE.BoxGeometry(35, 25, 5), body_materials);
-    body_materials.position.set(0, 10, -60)
-    body_materials.castShadow = true
-    scene.add(body_materials);
-
-    var leg_materials = [
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/leg_right.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/leg_left.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/leg_top.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/leg_bottom.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/leg_front.jpg')
-        }),
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/leg_back.jpg')
-        })
-    ];
-    leg_materials = new THREE.Mesh(new THREE.BoxGeometry(15, 25, 5), leg_materials);
-    leg_materials.position.set(0, -15, -60)
-    leg_materials.castShadow = true
-    scene.add(leg_materials);
 }
 
 function rotateField() {
