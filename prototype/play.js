@@ -372,8 +372,8 @@ function balls() {
 
     }
 
-    while(temp.isStart == true){
-        //cek apakah bola nabrak tepi, kalau iya pantulkan
+    // while(temp.isStart == true){
+    //     //cek apakah bola nabrak tepi, kalau iya pantulkan
         if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) 
         {
             bounce.pause()
@@ -406,5 +406,5 @@ function balls() {
             restart()
             buzz.play()
         }
-    }
+    // }
 }
