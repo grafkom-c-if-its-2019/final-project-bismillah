@@ -12,3 +12,5 @@ Todo List Bismillah:
 7. Bola mantul [OK]
 8. Bola masuk lobang, habis itu restart game [OK]
 9. Add gimball [not yet tested]
+
+coba kalo di branch aufa gimana
