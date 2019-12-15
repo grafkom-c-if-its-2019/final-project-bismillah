@@ -9,6 +9,7 @@
 
 final-project-bismillah created by GitHub Classroom
 
+
 Todo List Bismillah:
 1. Lapangan mini golf [OK]
 2. 1 bola [OK]
@@ -16,6 +17,14 @@ Todo List Bismillah:
 4. Lobang golf [OK]
 5. Translasi bola golf
 6. Tongkat pukul golf (power, arah) -> masih horizontal
+<<<<<<< HEAD
 7. Bola mantul
 8. Bola masuk lobang, habis itu restart game
 9. Gimball buat papan golf
+=======
+7. Bola mantul [OK]
+8. Bola masuk lobang, habis itu restart game [OK]
+9. Add gimball [not yet tested]
+
+coba kalo di branch aufa gimana
+>>>>>>> Aufa
