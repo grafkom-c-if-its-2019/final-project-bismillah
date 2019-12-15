@@ -1,6 +1,9 @@
 const TABLE_SIZE = { w: 120, h: 8, d: 60 }
 const TABLE_LEG_POS = { x: 50, y: -15, z: 20 }
 
+
+// import { OrbitControls } from './libs/OrbitControls.js';
+
 function promisifyLoader(loader, onProgress) {
     function promiseLoader(url) {
         return new Promise((resolve, reject) => {
@@ -55,11 +58,14 @@ function GameWorld(id) {
     this.id = id
     this.scene = new THREE.Scene()
    
-    this.camera.position.x = 0
-    // this.camera.position.y = 200
-    // this.camera.position.z = 0
-    this.camera.position.y = 60
-    this.camera.position.z = 130
+    this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
+    this.camera.position.set( 400, 200, 0 );
+
+    // this.camera.position.x = 0
+    // // this.camera.position.y = 200
+    // // this.camera.position.z = 0
+    // this.camera.position.y = 60
+    // this.camera.position.z = 130
     
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.shadowMap.enabled = true
@@ -92,8 +98,23 @@ function GameWorld(id) {
     this.bolaVelocity = new THREE.Vector3()
     this.restart = true
 
+    this.controls = new OrbitControls( camera, renderer.domElement );
+
+    //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
+
+    this.controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+    this.controls.dampingFactor = 0.05;
+
+    this.controls.screenSpacePanning = false;
+
+    this.controls.minDistance = 100;
+    this.controls.maxDistance = 500;
+
+    this.controls.maxPolarAngle = Math.PI / 2;
+
     this.camera.lookAt(this.scene.position)
-    document.getElementById('WebGL-output').appendChild(this.renderer.domElement)
+    document.getElementById('WebGL-output')
+            .appendChild(this.renderer.domElement)
 }
 
 
@@ -212,7 +233,11 @@ GameWorld.prototype.initWorld = function () {
 }
 
 GameWorld.prototype.animate = function () {
+    requestAnimationFrame( animate );
 
+    this.controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
+
+    render();
 }
 
 GameWorld.prototype.render = function () {
