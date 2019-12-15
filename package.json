@@ -1,0 +1,19 @@
+{
+  "name": "final-project-bismillah",
+  "version": "1.0.0",
+  "description": "final project computer graphics",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grafkom-c-if-its-2019/final-project-bismillah.git"
+  },
+  "author": "aufawibowo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grafkom-c-if-its-2019/final-project-bismillah/issues"
+  },
+  "homepage": "https://github.com/grafkom-c-if-its-2019/final-project-bismillah#readme"
+}

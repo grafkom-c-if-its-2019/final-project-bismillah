@@ -1,0 +1,16 @@
+{
+  "name": "prototype",
+  "version": "1.0.0",
+  "description": "prototype for final project computer graphics course",
+  "main": "play.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grafkom-c-if-its-2019/final-project-bismillah/prototype"
+  },
+  "author": "",
+  "license": "ISC"
+}
