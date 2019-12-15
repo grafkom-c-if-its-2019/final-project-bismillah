@@ -85,10 +85,6 @@ function GameWorld(id) {
     this.hole = new THREE.Mesh(new THREE.CylinderGeometry(3,3,1,32), new THREE.MeshPhongMaterial({color: 0x000000}))
     this.hole.position.set(-40,4,0);
     this.scene.add(this.hole);
-    
-    // this.stick = new THREE.Mesh(new THREE.CylinderGeometry(1,1,20,32), new THREE.MeshPhongMaterial({color: 0x6977d8}))
-    // this.stick.position.set(0,20,0);
-    // this.scene.add(this.stick);
 
     this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0x0000FF }))
     this.bola.castShadow = false
@@ -222,8 +218,6 @@ GameWorld.prototype.animate = function () {
 GameWorld.prototype.render = function () {
     requestAnimationFrame(this.render.bind(this))
     balls()
-    handle_racket()
-    handle_env_status()
     this.renderer.render(this.scene, this.camera)
 }
 
@@ -246,19 +240,7 @@ var pressed_key = {
 
 function handle_keydown(event) {
     var key_code = event.which
-    if (key_code == 38) {
-        pressed_key.player_0_up = true
-    }
-    else if (key_code == 40) {
-        pressed_key.player_0_down = true
-    }
-    else if (key_code == 83) {
-        pressed_key.player_1_down = true
-    }
-    else if (key_code == 87) {
-        pressed_key.player_1_up = true
-    }
-    else if (key_code == 32) {
+    if (key_code == 32) {
         if(temp.isStart == false){
             temp.isStart = true
         }
@@ -271,56 +253,7 @@ function handle_keydown(event) {
     }
 }
 
-function handle_keyup(event) {
-    var key_code = event.which
-    if (key_code == 38) {
-        pressed_key.player_0_up = false
-    }
-    else if (key_code == 40) {
-        pressed_key.player_0_down = false
-    }
-    else if (key_code == 83) {
-        pressed_key.player_1_down = false
-    }
-    else if (key_code == 87) {
-        pressed_key.player_1_up = false
-    }
-}
-
-
-var env_status = 1
-
-function handle_racket() {
-    var speed = 1
-    if (pressed_key.player_0_up == true && temp.players[0].racket.position.z >= -22) {
-        temp.players[0].racket.position.z -= speed
-    }
-    if (pressed_key.player_0_down == true && temp.players[0].racket.position.z <= 22) {
-        temp.players[0].racket.position.z += speed
-    }
-    if (pressed_key.player_1_up == true && temp.players[1].racket.position.z >= -22) {
-        temp.players[1].racket.position.z -= speed
-    }
-    if (pressed_key.player_1_down == true && temp.players[1].racket.position.z <= 22) {
-        temp.players[1].racket.position.z += speed
-    }
-}
-
-function handle_env_status() 
-{
-    if (pressed_key.change_env == true) {
-        if (env_status == 3) {
-            env_status = 1
-        }
-        else {
-            env_status += 1
-        }
-        pressed_key.change_env = false
-    }
-}
-
 document.addEventListener("keydown", handle_keydown, false);
-document.addEventListener("keyup", handle_keyup, false)
 
 var bounce = new Audio('assets/sound/Ping_Pong_Ball_Hit.mp3');
 var buzz = new Audio('assets/sound/buzz.mp3');
@@ -346,7 +279,7 @@ function balls() {
         temp.bola.position.z += temp.bolaVelocity.z
     }
 
-    //cek apakah bola nabrak tepi, kalau iya pantulkan
+    //pantulan bola ketika nabrak tepi atau penghalang
     if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) 
     {
         temp.bolaVelocity.z *= -1
