@@ -54,14 +54,13 @@ Player.prototype.setScoreMesh = function (scene) {
 function GameWorld(id) {
     this.id = id
     this.scene = new THREE.Scene()
-
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
+   
     this.camera.position.x = 0
     // this.camera.position.y = 200
     // this.camera.position.z = 0
     this.camera.position.y = 60
     this.camera.position.z = 130
-
+    
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.shadowMap.enabled = true
     this.renderer.setClearColor(0xFFFFFF)
@@ -276,7 +275,11 @@ function balls() {
     }
 
     if(temp.isStart == true){
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> Aufa
         temp.bola.position.x += temp.bolaVelocity.x
         temp.bola.position.z += temp.bolaVelocity.z
     }
@@ -287,7 +290,11 @@ function balls() {
         temp.bolaVelocity.z = Math.sin(initial_ball_angle)
     }
 
+<<<<<<< HEAD
     //pantulan bola ketika nabrak tepi atau penghalang
+=======
+  //pantulan bola ketika nabrak tepi atau penghalang
+>>>>>>> Aufa
     if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) 
     {
         temp.bolaVelocity.z *= -1
