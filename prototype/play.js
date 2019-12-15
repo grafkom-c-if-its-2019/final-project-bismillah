@@ -286,7 +286,7 @@ function handle_racket() {
     var posisiY = temp.players[0].racket.position.y
     var posisiZ = temp.players[0].racket.position.z
 
-    if(temp.bola.position.z >= 25 || temp.bola.position.z <= -25 || temp.bola.position.x >= 50 || temp.bola.position.x <= -50)
+    if(temp.players[0].racket.position.z >= 25 || temp.players[0].racket.position.z <= -25 || temp.players[0].racket.position.x >= 50 || temp.players[0].racket.position.x <= -50)
     {
         restart()
     }
