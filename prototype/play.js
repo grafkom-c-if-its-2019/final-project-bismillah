@@ -72,7 +72,7 @@ function GameWorld(id) {
 
     var loader = new THREE.CubeTextureLoader();
     loader.setPath('assets/textures/');
-    var textureCube = loader.load(['sideZ.jpg','sideZ.jpg','sideZ.jpg','sideZ.jpg','sideZ.jpg','sideZ.jpg']);
+    var textureCube = loader.load(['sideX.jpg','sideX.jpg','sideY.jpg','sideY.jpg','sideZ.jpg','sideZ.jpg']);
 
     this.block1 = new THREE.Mesh(new THREE.BoxGeometry(5,5,20), new THREE.MeshPhongMaterial({color: 0xffffff, envMap: textureCube}))
     this.block1.position.set(-20,6,0);
@@ -361,12 +361,12 @@ function balls() {
         temp.bolaVelocity.x *= -1
     }
 
-    //apabila bola masuk ke dalem lobang
+       //apabila bola masuk ke dalem lobang
     // posisi lobang -40, 6, 0
-    if(temp.bola.position.x == -40 && temp.bola.position.y == 6 && temp.bola.position.y == 0)
+    if(temp.bola.position.x <= -40 && temp.bola.position.y >=6 && temp.bola.position.z >= 0 && temp.bola.position.z <=  3)
     {
         buzz.pause()
-        temp.restart = true
+        restart()
         buzz.play()
     }
 
