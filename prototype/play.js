@@ -85,6 +85,10 @@ function GameWorld(id) {
     this.hole = new THREE.Mesh(new THREE.CylinderGeometry(2,2,1,32), new THREE.MeshPhongMaterial({color: 0x000000}))
     this.hole.position.set(-40,4,0);
     this.scene.add(this.hole);
+    
+    this.pointer = new THREE.Mesh(new THREE.CylinderGeometry(1,1,20,32), new THREE.MeshPhongMaterial({color: 0x6977d8}))
+    this.pointer.position.set(0,20,0);
+    this.scene.add(this.pointer);
 
     this.bola = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial({ color: 0x0000FF }))
     this.bola.castShadow = false
@@ -192,17 +196,6 @@ GameWorld.prototype.createSetMeja = function () {
     border.name = 'tepianMeja'
     this.mejaGroup.add(border)
 
-    // buat kaki meja
-    // let positions = [[-1, 1], [1, 1], [1, -1], [-1, -1]]
-    // positions.forEach(position => {
-    //     let tableLeg = new THREE.Mesh(
-    //         new THREE.BoxGeometry(8, 30, 8),
-    //         new THREE.MeshLambertMaterial({ color: 0x352421 }))
-    //     tableLeg.castShadow = true
-    //     tableLeg.position.set(TABLE_LEG_POS.x * position[0], TABLE_LEG_POS.y, TABLE_LEG_POS.z * position[1])
-    //     tableLeg.name = `kakiMeja${position[0]}${position[1]}`
-    //     this.mejaGroup.add(tableLeg)
-    // })
     this.scene.add(this.mejaGroup)
 }
 
@@ -333,9 +326,8 @@ var bounce = new Audio('assets/sound/Ping_Pong_Ball_Hit.mp3');
 var buzz = new Audio('assets/sound/buzz.mp3');
 
 function restart(){
-    var initial_ball_angle = (((Math.random() - 0.5) * 2) * 360) * (Math.PI / 180)
-    temp.bolaVelocity.x = Math.cos(initial_ball_angle)
-    temp.bolaVelocity.z = Math.sin(initial_ball_angle)
+    temp.bolaVelocity.x = 0.5
+    temp.bolaVelocity.z = 1
     temp.bola.position.x = 49
     temp.bola.position.z = 0
     temp.restart = false
@@ -354,55 +346,30 @@ function balls() {
     }
 
     //cek apakah bola nabrak tepi, kalau iya pantulkan
-    if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) {
+    if (temp.bola.position.z >= 25 || temp.bola.position.z <= -25) 
+    {
         temp.bolaVelocity.z *= -1
     }
-    if (temp.bola.position.x >= 50 || temp.bola.position.x <= -50) {
+    if (temp.bola.position.x >= 50 || temp.bola.position.x <= -50) 
+    {
         temp.bolaVelocity.x *= -1
     }
+    if (temp.bola.position.x >= 17 && temp.bola.position.x <= 23 && temp.bola.position.z <= 11 && temp.bola.position.z >= -11)
+    {
+        temp.bolaVelocity.x *= -1
+    }
+    if (temp.bola.position.x >= -23 && temp.bola.position.x <= -17 && temp.bola.position.z <= 11 && temp.bola.position.z >= -11)
+    {
+        temp.bolaVelocity.x *= -1
+    }
+    if(temp.bola.position.x )
 
        //apabila bola masuk ke dalem lobang
     // posisi lobang -40, 6, 0
-    if(temp.bola.position.x <= -40 && temp.bola.position.y >=6 && temp.bola.position.z >= 0 && temp.bola.position.z <=  3)
+    if(temp.bola.position.x <= -39 && temp.bola.position.y >=6 && temp.bola.position.z >= 0 && temp.bola.position.z <=  3)
     {
         buzz.pause()
         restart()
         buzz.play()
     }
-
-
-
-    //cek gol dan raket
-    // if (temp.bola.position.x >= 50) {
-    //     if (temp.bola.position.z >= temp.players[0].racket.position.z - 10 && temp.bola.position.z <= temp.players[0].racket.position.z + 10) {
-    //         temp.bolaVelocity.x *= -1.05
-    //         bounce.pause();
-    //         bounce.currentTime = 0;
-    //         bounce.play();
-    //     }
-    //     else {
-    //         buzz.pause();
-    //         buzz.currentTime = 0;
-    //         buzz.play();
-    //         temp.restart = true
-    //         temp.players[1].score += 1
-    //         // temp.players[1].setScoreMesh(temp.scene)
-    //     }
-    // }
-    // else if (temp.bola.position.x <= -50) {
-    //     if (temp.bola.position.z >= temp.players[1].racket.position.z - 10 && temp.bola.position.z <= temp.players[1].racket.position.z + 10) {
-    //         temp.bolaVelocity.x *= -1.05
-    //         bounce.pause();
-    //         bounce.currentTime = 0;
-    //         bounce.play();
-    //     }
-    //     else {
-    //         buzz.pause();
-    //         buzz.currentTime = 0;
-    //         buzz.play();
-    //         temp.restart = true
-    //         temp.players[0].score += 1
-    //         // temp.players[0].setScoreMesh(temp.scene)
-    //     }
-    // }
 }
